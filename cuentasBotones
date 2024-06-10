@@ -1,0 +1,143 @@
+package cajero;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+public class CuentasBotones extends javax.swing.JFrame {
+    static String tarjeta;
+    public Fondo imagen = new Fondo(); 
+
+    public CuentasBotones(String tarjeta) {
+        this.tarjeta = tarjeta;
+        this.setLocationRelativeTo(null);
+        this.setContentPane(imagen);
+        initComponents();
+        setResizable(false);
+        agregarBotonesCuentas();
+        setLocationRelativeTo(null);
+    }
+
+    private String[] obtenerCuentas(String tarjeta) {
+        String archivoPath = "C:\\Users\\fband\\Downloads\\cajero (1)\\cajero\\tarjetas\\" + tarjeta + ".txt";
+        File archivo = new File(archivoPath);
+        ArrayList<String> nCuentas = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                if (!linea.contains(":")) {
+                    nCuentas.add(linea);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return nCuentas.toArray(new String[0]);
+    }
+
+    private String nncuentas = "";
+
+    private void agregarBotonesCuentas() {
+        String[] ncuentas = obtenerCuentas(tarjeta);
+        for (String nombre : ncuentas) {
+            JButton boton = new JButton(nombre);
+            configurarBotonConColor(boton, Color.RED, Color.WHITE);
+            boton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    nncuentas = nombre;
+                    menu pel = new menu(tarjeta, nncuentas);
+                    pel.setVisible(true);
+                    dispose();
+                }
+            });
+            panelDeCuentas.add(boton);
+        }
+    }
+
+    public void configurarBotonConColor(JButton boton, Color colorFondo, Color colorTexto) {
+        boton.setBackground(colorFondo);
+        boton.setForeground(colorTexto);
+        boton.setFont(boton.getFont().deriveFont(java.awt.Font.BOLD, 42f));
+        boton.setOpaque(true);
+        boton.setBorderPainted(false);
+    }
+
+    @SuppressWarnings("unchecked")
+    private void initComponents() {
+        panelDeCuentas = new javax.swing.JPanel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        panelDeCuentas.setLayout(new java.awt.GridLayout(0, 2));
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(panelDeCuentas, javax.swing.GroupLayout.DEFAULT_SIZE, 591, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelDeCuentas, javax.swing.GroupLayout.DEFAULT_SIZE, 436, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        pack();
+    }
+
+    public static void main(String args[]) {
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new CuentasBotones(tarjeta).setVisible(true);
+            }
+        });
+    }
+
+    class Fondo extends JPanel {
+        private Image imagen;
+
+        @Override
+        public void paint(Graphics g) {
+            imagen = new ImageIcon(getClass().getResource("/imagenes/fondo.png")).getImage();
+            g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
+            setOpaque(false);
+            super.paint(g);
+        }
+    }
+
+    public Icon setIcono(String url, JButton b) {
+        ImageIcon icon = new ImageIcon(getClass().getResource(url));
+        int ancho = b.getWidth();
+        int alto = b.getHeight();
+        ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(ancho, alto, Image.SCALE_DEFAULT));
+        return icono;
+    }
+
+    public Icon setIconoPrecionado(String url, JButton b, int ancho, int alto) {
+        ImageIcon icon = new ImageIcon(getClass().getResource(url));
+        int width = b.getWidth() - ancho;
+        int height = b.getHeight() - alto;
+        ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+        return icono;
+    }
+
+    // Variables declaration - do not modify
+    private javax.swing.JPanel panelDeCuentas;
+    // End of variables declaration
+}
