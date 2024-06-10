@@ -1,0 +1,327 @@
+/*
+ * Usuario
+ */
+package cajero;
+
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
+
+public class usuario extends javax.swing.JFrame {
+    public Fondo imagen = new Fondo(); 
+    
+    public usuario() {
+        this.setContentPane(imagen);
+        initComponents();
+        setResizable(false);
+
+        /*
+         * Configuración de los iconos para el botón confirmar
+         */
+        confirmar.setIcon(setIcono("/imagenes/confirmar.png", confirmar));
+        confirmar.setPressedIcon(setIconoPrecionado("/imagenes/confirmar.png", confirmar, 30, 30));
+    }
+
+    /*
+     * Método que se llama desde el constructor para inicializar el formulario
+     */
+    @SuppressWarnings("unchecked")
+    private void initComponents() {
+        idiomas = new javax.swing.JComboBox<>();
+        texto1 = new javax.swing.JLabel();
+        texto2 = new javax.swing.JLabel();
+        contraActual = new javax.swing.JTextField();
+        texto3 = new javax.swing.JLabel();
+        contraNueva = new javax.swing.JTextField();
+        texto4 = new javax.swing.JLabel();
+        contraNueva1 = new javax.swing.JTextField();
+        imagen2 = new javax.swing.JLabel();
+        confirmar = new javax.swing.JButton();
+        texto5 = new javax.swing.JLabel();
+        contraActual1 = new javax.swing.JTextField();
+        texto6 = new javax.swing.JLabel();
+
+        idiomas.setFont(new java.awt.Font("Dialog", 1, 24)); 
+        idiomas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Español", "English", "Русский", " " }));
+        idiomas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idiomasActionPerformed(evt);
+            }
+        });
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        texto1.setBackground(new java.awt.Color(51, 51, 51));
+        texto1.setFont(new java.awt.Font("Arial Black", 3, 48)); 
+        texto1.setText("BNB");
+
+        texto2.setFont(new java.awt.Font("Arial Black", 3, 36)); 
+        texto2.setForeground(new java.awt.Color(0, 51, 102));
+        texto2.setText("Ingrese contraseña :");
+
+        contraActual.setFont(new java.awt.Font("Arial", 0, 24)); 
+        contraActual.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        contraActual.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        contraActual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contraActualActionPerformed(evt);
+            }
+        });
+
+        texto3.setFont(new java.awt.Font("Arial Black", 3, 36)); 
+        texto3.setForeground(new java.awt.Color(0, 51, 102));
+        texto3.setText("CREAR USUARIO");
+
+        contraNueva.setFont(new java.awt.Font("Arial", 0, 24)); 
+        contraNueva.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        contraNueva.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        contraNueva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contraNuevaActionPerformed(evt);
+            }
+        });
+
+        texto4.setFont(new java.awt.Font("Arial Black", 3, 36)); 
+        texto4.setForeground(new java.awt.Color(0, 51, 102));
+        texto4.setText("Repita la contraseña :");
+
+        contraNueva1.setFont(new java.awt.Font("Arial", 0, 24)); 
+        contraNueva1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        contraNueva1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        contraNueva1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contraNueva1ActionPerformed(evt);
+            }
+        });
+
+        imagen2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/logo1.png"))); 
+
+        confirmar.setBorderPainted(false);
+        confirmar.setContentAreaFilled(false);
+        confirmar.setFocusPainted(false);
+        confirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmarActionPerformed(evt);
+            }
+        });
+
+        texto5.setFont(new java.awt.Font("Arial Black", 3, 36)); 
+        texto5.setForeground(new java.awt.Color(0, 51, 102));
+        texto5.setText("Ingrese Apellidos:");
+
+        contraActual1.setFont(new java.awt.Font("Arial", 0, 24)); 
+        contraActual1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        contraActual1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        contraActual1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                contraActual1ActionPerformed(evt);
+            }
+        });
+
+        texto6.setFont(new java.awt.Font("Arial Black", 3, 36)); 
+        texto6.setForeground(new java.awt.Color(0, 51, 102));
+        texto6.setText("Ingrese nombres:");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(confirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(187, 187, 187))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(texto1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(83, 83, 83)
+                        .addComponent(texto3, javax.swing.GroupLayout.PREFERRED_SIZE, 558, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(texto5, javax.swing.GroupLayout.PREFERRED_SIZE, 558, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(contraActual, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(81, 81, 81))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(261, 261, 261)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(texto2)
+                                    .addComponent(contraNueva1, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(254, 254, 254)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(texto4)
+                                    .addComponent(contraNueva, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(73, 73, 73)))
+                .addComponent(imagen2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(272, 272, 272)
+                    .addComponent(contraActual1, javax.swing.GroupLayout.PREFERRED_SIZE, 481, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(363, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(246, 246, 246)
+                    .addComponent(texto6, javax.swing.GroupLayout.PREFERRED_SIZE, 558, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(312, Short.MAX_VALUE)))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(texto1)
+                    .addComponent(texto3, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(85, 85, 85)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(texto5, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(contraActual, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(texto2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(contraNueva1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(texto4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(contraNueva, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(156, 156, 156)
+                        .addComponent(confirmar, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(imagen2))
+                .addContainerGap(21, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(171, 171, 171)
+                    .addComponent(contraActual1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(586, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(104, 104, 104)
+                    .addComponent(texto6, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(635, Short.MAX_VALUE)))
+        );
+
+        pack();
+    }                       
+
+    private void contraActualActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        // TODO add your handling code here:
+    }                                            
+
+    private void contraNuevaActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        // TODO add your handling code here:
+    }                                           
+
+    private void contraNueva1ActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        // TODO add your handling code here:
+    }                                            
+
+    private void confirmarActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        System.exit(0);
+    }                                         
+
+    private void idiomasActionPerformed(java.awt.event.ActionEvent evt) {                                        
+        // TODO add your handling code here:
+    }                                       
+
+    private void contraActual1ActionPerformed(java.awt.event.ActionEvent evt) {                                              
+        // TODO add your handling code here:
+    }                                             
+
+    /*
+     * Método principal para ejecutar la aplicación
+     */
+    public static void main(String args[]) {
+        /* Configuración del look and feel Nimbus */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* Si Nimbus (introducido en Java SE 6) no está disponible, mantener el look and feel predeterminado.
+         * Para más detalles ver http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(usuario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Crear y mostrar el formulario */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new usuario().setVisible(true);
+            }
+        });
+    }
+
+    /*
+     * Clase interna para establecer el fondo del formulario
+     */
+    class Fondo extends JPanel {
+        private Image imagen;
+
+        @Override
+        public void paint(Graphics g) {
+            imagen = new ImageIcon(getClass().getResource("/imagenes/fondo.png")).getImage();
+            g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
+            setOpaque(false);
+            super.paint(g);
+        }
+    }
+
+    /*
+     * Método para establecer el icono de un botón
+     */
+    public Icon setIcono(String url, JButton b) {
+        ImageIcon icon = new ImageIcon(getClass().getResource(url)); 
+        int ancho = b.getWidth();
+        int alto = b.getHeight();
+        ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(ancho, alto, Image.SCALE_DEFAULT)); 
+        return icono;
+    }
+
+    /*
+     * Método para establecer el icono presionado de un botón
+     */
+    public Icon setIconoPrecionado(String url, JButton b, int ancho, int alto) {
+        ImageIcon icon = new ImageIcon(getClass().getResource(url));
+        int width = b.getWidth() - ancho;
+        int height = b.getHeight() - alto;
+        ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+        return icono;
+    }
+
+    // Declaración de variables - no modificar                     
+    private javax.swing.JButton confirmar;
+    private javax.swing.JTextField contraActual;
+    private javax.swing.JTextField contraActual1;
+    private javax.swing.JTextField contraNueva;
+    private javax.swing.JTextField contraNueva1;
+    private javax.swing.JComboBox<String> idiomas;
+    private javax.swing.JLabel imagen2;
+    private javax.swing.JLabel texto1;
+    private javax.swing.JLabel texto2;
+    private javax.swing.JLabel texto3;
+    private javax.swing.JLabel texto4;
+    private javax.swing.JLabel texto5;
+    private javax.swing.JLabel texto6;
+    // Fin de la declaración de variables
+}
