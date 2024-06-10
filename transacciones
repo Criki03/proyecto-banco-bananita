@@ -1,0 +1,94 @@
+package cajero;
+
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+/**
+ * Esta clase representa la ventana de transacciones en el cajero automático.
+ * Permite al usuario elegir el tipo de monto que desea transferir.
+ */
+public class transacciones extends javax.swing.JFrame {
+    // Variables estáticas para almacenar información de cuentas y tarjetas
+    static String cuenta;
+    static String tarjeta;
+    // Instancia de la clase Fondo para el fondo de la ventana
+    public Fondo imagen = new Fondo();  
+    
+    /**
+     * Constructor de la clase transacciones.
+     * @param cuenta Número de cuenta del usuario.
+     * @param tarjeta Número de tarjeta asociada a la cuenta.
+     */
+    public transacciones(String cuenta, String tarjeta) {
+        this.cuenta = cuenta;
+        this.tarjeta = tarjeta;
+        this.setContentPane(imagen);
+        initComponents();
+        setResizable(false);
+        // Configuración de los botones para elegir el monto de la transacción
+        saldo.setIcon(setIcono("/imagenes/10bs.png", saldo));
+        saldo.setPressedIcon(setIconoPrecionado("/imagenes/10bs.png", saldo, 30, 30));
+        saldo1.setIcon(setIcono("/imagenes/50bs.png", saldo1));
+        saldo1.setPressedIcon(setIconoPrecionado("/imagenes/50bs.png", saldo1, 30, 30));
+        saldo2.setIcon(setIcono("/imagenes/70bs.png", saldo2));
+        saldo2.setPressedIcon(setIconoPrecionado("/imagenes/70bs.png", saldo2, 30, 30));
+        saldo3.setIcon(setIcono("/imagenes/100bs.png", saldo3));
+        saldo3.setPressedIcon(setIconoPrecionado("/imagenes/100bs.png", saldo3, 30, 30));
+        saldo4.setIcon(setIcono("/imagenes/150bs.png", saldo4));
+        saldo4.setPressedIcon(setIconoPrecionado("/imagenes/150bs.png", saldo4, 30, 30));
+        saldo5.setIcon(setIcono("/imagenes/200bs.png", saldo5));
+        saldo5.setPressedIcon(setIconoPrecionado("/imagenes/200bs.png", saldo5, 30, 30));
+        saldo7.setIcon(setIcono("/imagenes/otroMonto.png", saldo7));
+        saldo7.setPressedIcon(setIconoPrecionado("/imagenes/otroMonto.png", saldo7, 30, 30));
+        atras.setIcon(setIcono("/imagenes/atras.png", atras));
+        atras.setPressedIcon(setIconoPrecionado("/imagenes/atras.png", atras, 30, 30));
+    }
+
+    // Método generado automáticamente que inicializa los componentes de la ventana
+    private void initComponents() {
+        // Inicialización de componentes como etiquetas, botones, etc.
+        // Configuración de eventos para los botones
+    }                         
+    
+    // Evento para el botón de atras
+    private void atrasActionPerformed(java.awt.event.ActionEvent evt) {                                      
+        inicio v = new inicio();
+        v.setVisible(true);
+        dispose();
+    }                                     
+
+    // Evento para el botón de otro monto
+    private void saldo7ActionPerformed(java.awt.event.ActionEvent evt) {                                       
+        OtroMonto v = new OtroMonto(cuenta, tarjeta);
+        v.setVisible(true);
+        dispose();
+    }                                      
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(transacciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(transacciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(transacciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(transacciones.class.getName()).log(java.util.logging.Level.SEVERE, null, ex
