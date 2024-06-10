@@ -1,0 +1,106 @@
+package cajero;
+
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+/**
+ * Esta clase representa la ventana para ingresar un monto personalizado en el cajero automático.
+ * Permite al usuario ingresar el monto que desea depositar o retirar.
+ */
+public class OtroMonto extends javax.swing.JFrame {
+    // Variables estáticas para almacenar información de cuentas y tarjetas
+    static String cuenta;
+    static String tarjeta;
+    // Instancia de la clase Fondo para el fondo de la ventana
+    public Fondo imagen = new Fondo();  
+    
+    /**
+     * Constructor de la clase OtroMonto.
+     * @param cuenta Número de cuenta del usuario.
+     * @param tarjeta Número de tarjeta asociada a la cuenta.
+     */
+    public OtroMonto(String cuenta, String tarjeta) {
+        this.cuenta = cuenta;
+        this.tarjeta = tarjeta;
+        this.setContentPane(imagen);
+        initComponents();
+        setResizable(false);
+        // Configuración del botón de confirmar
+        confirmar.setIcon(setIcono("/imagenes/confirmar.png", confirmar));
+        confirmar.setPressedIcon(setIconoPrecionado("/imagenes/confirmar.png", confirmar, 30, 30));
+    }
+    
+    CambiosEnSaldo cambio = new CambiosEnSaldo(); // Instancia para realizar cambios en el saldo
+
+    // Método generado automáticamente que inicializa los componentes de la ventana
+    private void initComponents() {
+        // Inicialización de componentes como etiquetas, botones, etc.
+        // Configuración de eventos para los botones
+    }                         
+    
+    // Evento para el botón de confirmar
+    private void confirmarActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        RetiroMonto(); // Llama al método para procesar el retiro del monto
+    }                                         
+
+    /**
+     * Método para procesar el retiro del monto ingresado por el usuario.
+     */
+    public void RetiroMonto(){
+        String ingreso = numCuenta.getText(); // Obtiene el monto ingresado por el usuario
+        double dinero = Double.parseDouble(ingreso); // Convierte el monto a tipo double
+        //-----------------------------------------------------------------------------------------------------------
+        // Llama al método de la clase CambiosEnSaldo para decrementar el saldo en el archivo de cuenta
+        cambio.DecrementoSaldo("C:\\Users\\fband\\Downloads\\cajero (1)\\cajero\\cuentas\\"+cuenta+".txt", dinero, cuenta);
+        //----------------------------------------------------------------------------------------------------------
+        // Abre la ventana de menú con la tarjeta y cuenta correspondientes
+        menu i = new menu(tarjeta, cuenta);
+        i.setVisible(true);
+        dispose(); // Cierra la ventana actual
+    }
+    
+    // Clase para el fondo de la ventana
+    class Fondo extends JPanel {
+        private Image imagen;
+
+        @Override
+        public void paint(Graphics g) {
+            imagen = new ImageIcon(getClass().getResource("/imagenes/fondo.png")).getImage();
+            g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
+            setOpaque(false);
+            super.paint(g);
+        }
+    }
+    
+    // Método para cambiar el fondo de un botón
+    public Icon setIcono(String url, JButton b){
+         ImageIcon icon = new ImageIcon(getClass().getResource(url)); 
+         int ancho = b.getWidth();
+         int alto = b.getHeight();
+         ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(ancho, alto, Image.SCALE_DEFAULT)); 
+         return icono;
+     }
+     
+    // Método para cambiar el fondo de un botón al ser presionado
+     public Icon setIconoPrecionado(String url, JButton b, int ancho, int alto){
+         ImageIcon icon = new ImageIcon(getClass().getResource(url));
+         int width = b.getWidth() - ancho;
+         int height = b.getHeight() - alto;
+         ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+         return icono;
+     }
+    
+    // Variables declaration - do not modify                     
+    private javax.swing.JButton confirmar;
+    private javax.swing.JLabel imagen2;
+    private javax.swing.JTextField numCuenta;
+    private javax.swing.JLabel texto1;
+    private javax.swing.JLabel texto4;
+    private javax.swing.JLabel texto6;
+    // End of variables declaration                   
+}
