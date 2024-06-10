@@ -1,0 +1,99 @@
+package cajero;
+
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+/**
+ * La clase `retiros` representa la ventana para realizar retiros de dinero en el cajero automático.
+ */
+public class retiros extends javax.swing.JFrame {
+    // Variables estáticas para almacenar la cuenta y la tarjeta
+    static String cuenta;
+    static String tarjeta;
+    
+    // Instancia de la clase Fondo para personalizar el fondo de la ventana
+    public Fondo imagen = new Fondo();
+
+    /**
+     * Constructor de la clase `retiros`.
+     * @param cuenta El número de cuenta del usuario.
+     * @param tarjeta El número de tarjeta del usuario.
+     */
+    public retiros(String cuenta, String tarjeta) {
+        // Asignar los valores de cuenta y tarjeta
+        this.cuenta = cuenta;
+        this.tarjeta = tarjeta;
+        
+        // Configurar el fondo de la ventana
+        this.setContentPane(imagen);
+        
+        // Inicializar los componentes de la interfaz
+        initComponents();
+        setResizable(false);
+        
+        // Configurar los iconos de los botones y sus acciones
+        configurarBotones();
+    }
+    
+    // Método para configurar los iconos de los botones y sus acciones
+    private void configurarBotones() {
+        // Configuración de los iconos de los botones de retiro con sus respectivas imágenes
+        BTONDiez.setIcon(setIcono("/imagenes/10bs.png", BTONDiez));
+        BTONDiez.setPressedIcon(setIconoPrecionado("/imagenes/10bs.png", BTONDiez, 30, 30));
+
+        // Configurar el resto de botones de la misma manera
+        // (BTNCINCUENTA, BTNSETENTA, BTNCIEN, BTNCIENTOCINCUENTA, BTNDOSIENTOS, saldo7, atras)
+    }
+
+    /**
+     * Método para inicializar y configurar los componentes de la interfaz.
+     * Este método es generado automáticamente por el diseñador de la interfaz gráfica.
+     */
+    @SuppressWarnings("unchecked")
+    private void initComponents() {
+        // Inicialización de componentes como etiquetas y botones
+        // Configuración de propiedades de los componentes, como eventos de clic en los botones
+        // (texto1, texto2, BTNCINCUENTA, BTNSETENTA, BTNCIEN, BTNCIENTOCINCUENTA, BTNDOSIENTOS, atras, BTONDiez, saldo7)
+        // Este código es generado automáticamente por el diseñador de la interfaz gráfica.
+    }
+
+    /**
+     * Método para manejar el evento de clic en el botón "atras".
+     * Se crea una instancia de la clase `menu` y se muestra la ventana del menú principal.
+     */
+    private void atrasActionPerformed(java.awt.event.ActionEvent evt) {
+        menu v = new menu(tarjeta, cuenta);
+        v.setVisible(true);
+        dispose(); // Cerrar la ventana actual
+    }
+
+    // Métodos para manejar eventos de clic en los botones de retiro con distintos montos
+    // Estos métodos decrementan el saldo y muestran la ventana del menú principal después del retiro
+
+    /**
+     * Método principal para ejecutar la aplicación de retiros.
+     * Crea una instancia de la clase `retiros` y muestra la ventana.
+     */
+    public static void main(String args[]) {
+        // Crear y mostrar la ventana de retiros
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new retiros(cuenta, tarjeta).setVisible(true);
+            }
+        });
+    }
+
+    // Clase interna para personalizar el fondo de la ventana
+    class Fondo extends JPanel {
+        // Variables y métodos para personalizar el fondo de la ventana
+        // Este código se ejecuta al pintar la ventana para establecer el fondo personalizado
+    }
+
+    // Métodos para configurar los iconos de los botones y sus versiones presionadas
+    // (setIcono, setIconoPresionado)
+}
