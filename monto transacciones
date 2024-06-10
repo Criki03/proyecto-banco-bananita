@@ -1,0 +1,110 @@
+package cajero;
+
+// Importaciones necesarias
+import static cajero.transaccionIII.cuenta;
+import static cajero.transaccionIII.cuenta2;
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
+/**
+ * Esta clase representa la ventana de MontoTransacciones en el cajero automático.
+ * Permite ingresar el monto a depositar o retirar y realizar la transacción.
+ */
+public class MontoTransacciones extends javax.swing.JFrame {
+   // Variables estáticas para almacenar información de cuentas y tarjetas
+   static String cuenta;
+   static String tarjeta;
+   static String cuenta2;
+   // Instancia de la clase Fondo para el fondo de la ventana
+   public Fondo imagen = new Fondo();  
+    
+    /**
+     * Constructor de la clase MontoTransacciones.
+     * @param cuenta Número de cuenta.
+     * @param tarjeta Número de tarjeta asociada a la cuenta.
+     * @param cuenta2 Número de cuenta destino para la transacción.
+     */
+    public MontoTransacciones(String cuenta, String tarjeta, String cuenta2) {
+        this.cuenta = cuenta;
+        this.tarjeta = tarjeta;
+        this.cuenta2 = cuenta2;
+        this.setContentPane(imagen);
+        initComponents();
+        setResizable(false);
+        // Configuración de los botones de confirmar transacción
+        confirmar.setIcon(setIcono("/imagenes/confirmar.png", confirmar));
+        confirmar.setPressedIcon(setIconoPrecionado("/imagenes/confirmar.png", confirmar, 30, 30));
+    }
+    
+    // Instancia de CambiosEnSaldo para realizar cambios en el saldo de cuentas
+    CambiosEnSaldo cambio = new CambiosEnSaldo();
+
+    // Método generado automáticamente que inicializa los componentes de la ventana
+    private void initComponents() {
+        // Inicialización de componentes como etiquetas, campos de texto y botones
+        // Configuración de eventos para los botones
+    }                         
+    
+    // Evento para el botón de confirmar transacción
+    private void confirmarActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        RetiroMonto();
+    }                                         
+
+    // Método para realizar la transacción de retiro o depósito
+    public void RetiroMonto() {
+        // Obtención del monto ingresado por el usuario
+        String ingreso = numCuenta.getText();
+        double dinero = Double.parseDouble(ingreso);
+        // Realización de la transacción de retiro o depósito
+        cambio.transferirDinero("ruta/cuenta_origen.txt", "ruta/cuenta_destino.txt", dinero, cuenta, cuenta2);
+        // Redirección a la ventana de menú principal
+        menu i = new menu(tarjeta, cuenta);
+        i.setVisible(true);
+        dispose(); 
+    }
+
+    // Método main para ejecutar la ventana
+    public static void main(String args[]) {
+        // Creación de la ventana de MontoTransacciones
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new MontoTransacciones(cuenta, tarjeta, cuenta2).setVisible(true);
+            }
+        });
+    }
+    
+    // Clase interna para el fondo de la ventana
+    class Fondo extends JPanel {
+        private Image imagen;
+
+        @Override
+        public void paint(Graphics g) {
+            imagen = new ImageIcon(getClass().getResource("/imagenes/fondo.png")).getImage();
+            g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
+            setOpaque(false);
+            super.paint(g);
+        }
+    }
+
+    // Método para establecer el ícono de un botón
+    public Icon setIcono(String url, JButton b) {
+        ImageIcon icon = new ImageIcon(getClass().getResource(url)); 
+        int ancho = b.getWidth();
+        int alto = b.getHeight();
+        ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(ancho, alto, Image.SCALE_DEFAULT)); 
+        return icono;
+    }
+
+    // Método para establecer el ícono presionado de un botón
+    public Icon setIconoPrecionado(String url, JButton b, int ancho, int alto) {
+        ImageIcon icon = new ImageIcon(getClass().getResource(url));
+        int width = b.getWidth() - ancho;
+        int height = b.getHeight() - alto;
+        ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+        return icono;
+    }
+}
