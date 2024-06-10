@@ -1,0 +1,262 @@
+/*
+ * Cajero automático
+ */
+package cajero;
+
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
+
+public class menu extends javax.swing.JFrame {
+    private JComboBox<String> idiomasComboBox;
+    static String tarjeta;
+    static String cuenta;
+    public Fondo imagen = new Fondo();
+
+    public menu(String tarjeta, String cuenta) {
+        funcionalidad ddd = new funcionalidad();
+        /*
+         * Obtiene el nombre del usuario desde un archivo de texto basado en la tarjeta proporcionada
+         */
+        String nomn = ddd.obtenerNombre("C:\\Users\\fband\\Downloads\\cajero (1)\\cajero\\tarjetas\\" + tarjeta + ".txt");
+
+        /*
+         * Establece el fondo de la interfaz
+         */
+        this.setContentPane(imagen);
+        initComponents();
+        transp(nomn, cuenta);
+        menu.tarjeta = tarjeta;
+        menu.cuenta = cuenta;
+        setResizable(false);
+
+        /*
+         * Configuración del panel y la disposición de los botones
+         */
+        JPanel panel = new JPanel();
+        panel.setLayout(null);
+
+        /*
+         * Configuración de iconos para los botones (parte gráfica omitida)
+         */
+    }
+
+    /*
+     * Método para cambiar los textos según el idioma seleccionado
+     */
+    public void cambiarTextos() {
+        String leng = (String) idiomasComboBox.getSelectedItem();
+
+        if ("Русский".equals(leng)) {
+            texto1.setText("Имя:");
+            texto2.setText("Выберите тип транзакции, который вы хотите");
+        } else if ("English".equals(leng)) {
+            texto1.setText("Name:");
+            texto2.setText("Choose the type of Transaction you want");
+        } else if ("Español".equals(leng)) {
+            texto1.setText("Nombre");
+            texto2.setText("Elige el tipo de Transaccion Que quieras");
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void initComponents() {
+        idiomas = new javax.swing.JComboBox<>();
+        retirar = new javax.swing.JButton();
+        depositar = new javax.swing.JButton();
+        contra = new javax.swing.JButton();
+        transferir = new javax.swing.JButton();
+        saldo = new javax.swing.JButton();
+        texto2 = new javax.swing.JLabel();
+        texto6 = new javax.swing.JLabel();
+        atras = new javax.swing.JButton();
+        texto1 = new javax.swing.JLabel();
+        texto4 = new javax.swing.JLabel();
+        BTNnombre = new javax.swing.JButton();
+        cambio = new javax.swing.JButton();
+        numCuentaLBL = new javax.swing.JLabel();
+
+        idiomas.setFont(new java.awt.Font("Dialog", 1, 24));
+        idiomas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Español", "English", "Русский", " "}));
+        idiomas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                idiomasActionPerformed(evt);
+            }
+        });
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        /*
+         * Configuración de los botones y sus acciones (parte gráfica omitida)
+         */
+
+        /*
+         * Disposición de los componentes en el layout (parte gráfica omitida)
+         */
+
+        pack();
+    }
+
+    /*
+     * Métodos de acción para cada botón (parte gráfica omitida)
+     */
+    private void retirarActionPerformed(java.awt.event.ActionEvent evt) {
+        retiros v = new retiros(cuenta, tarjeta);
+        v.setVisible(true);
+        dispose();
+    }
+
+    private void depositarActionPerformed(java.awt.event.ActionEvent evt) {
+        OtroMontoI v = new OtroMontoI(cuenta, tarjeta);
+        v.setVisible(true);
+        dispose();
+    }
+
+    private void transferirActionPerformed(java.awt.event.ActionEvent evt) {
+        OtraCuenta v = new OtraCuenta(cuenta, tarjeta);
+        v.setVisible(true);
+        dispose();
+    }
+
+    private void contraActionPerformed(java.awt.event.ActionEvent evt) {
+        contra v = new contra(tarjeta, cuenta);
+        v.setVisible(true);
+        dispose();
+    }
+
+    private void atrasActionPerformed(java.awt.event.ActionEvent evt) {
+        CuentasBotones v = new CuentasBotones(tarjeta);
+        v.setVisible(true);
+        dispose();
+    }
+
+    private void saldoActionPerformed(java.awt.event.ActionEvent evt) {
+        SaldoCuentas s = new SaldoCuentas(cuenta, tarjeta);
+        s.setVisible(true);
+        dispose();
+    }
+
+    private void idiomasActionPerformed(java.awt.event.ActionEvent evt) {
+        /*
+         * Acciones al seleccionar un idioma (parte gráfica omitida)
+         */
+    }
+
+    private void cambioActionPerformed(java.awt.event.ActionEvent evt) {
+        CambioMoneda v = new CambioMoneda(cuenta, tarjeta);
+        v.setVisible(true);
+        dispose();
+    }
+
+    /*
+     * Método para actualizar los textos del nombre y cuenta
+     */
+    public void transp(String nom, String cuenta) {
+        BTNnombre.setText(nom);
+        numCuentaLBL.setText(cuenta);
+        BTNnombre.setContentAreaFilled(false);
+        BTNnombre.setBorderPainted(false);
+    }
+
+    public static void main(String args[]) {
+       
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new menu(tarjeta, cuenta).setVisible(true);
+            }
+        });
+    }
+
+    /*
+     * Clase interna para establecer el fondo del panel
+     */
+    class Fondo extends JPanel {
+        private Image imagen;
+
+        @Override
+        public void paint(Graphics g) {
+            imagen = new ImageIcon(getClass().getResource("/imagenes/fondo.png")).getImage();
+            g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
+            setOpaque(false);
+            super.paint(g);
+        }
+    }
+
+    /*
+     * Clase interna para establecer otro fondo del panel
+     */
+    class Azul extends JPanel {
+        private Image imagen;
+
+        @Override
+        public void paint(Graphics g) {
+            imagen = new ImageIcon(getClass().getResource("/imagenes/fondo_1.png")).getImage();
+            g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
+            setOpaque(false);
+            super.paint(g);
+        }
+    }
+
+    /*
+     * Método para establecer el icono de un botón
+     */
+    public Icon setIcono(String url, JButton b) {
+        ImageIcon icon = new ImageIcon(getClass().getResource(url));
+        int ancho = b.getWidth();
+        int alto = b.getHeight();
+        ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(ancho, alto, Image.SCALE_DEFAULT));
+        return icono;
+    }
+
+    /*
+     * Método para establecer el icono cuando el botón es presionado
+     */
+    public Icon setIconoPrecionado(String url, JButton b, int ancho, int alto) {
+        ImageIcon icon = new ImageIcon(getClass().getResource(url));
+        int width = b.getWidth() - ancho;
+        int height = b.getHeight() - alto;
+        ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+        return icono;
+    }
+
+    
+    private javax.swing.JButton BTNnombre;
+    private javax.swing.JButton atras;
+    private javax.swing.JButton cambio;
+    private javax.swing.JButton contra;
+    private javax.swing.JButton depositar;
+    private javax.swing.JComboBox<String> idiomas;
+    private javax.swing.JLabel numCuentaLBL;
+    private javax.swing.JButton retirar;
+    private javax.swing.JButton saldo;
+    private javax.swing.JLabel texto1;
+    private javax.swing.JLabel texto2;
+    private javax.swing.JLabel texto4;
+    private javax.swing.JLabel texto6;
+    private javax.swing.JButton transferir;
+    
+}
