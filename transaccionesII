@@ -1,0 +1,90 @@
+package cajero;
+
+import java.awt.Graphics;
+import java.awt.Image;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+/**
+ * Esta clase representa la ventana para realizar transacciones (transferencias) en el cajero automático.
+ * Permite al usuario elegir el monto a transferir entre diferentes opciones predefinidas.
+ */
+public class transaccionIII extends javax.swing.JFrame {
+    // Variables estáticas para almacenar información de cuentas y tarjetas
+    static String cuenta;
+    static String tarjeta;
+    static String cuenta2;
+    // Instancia de la clase Fondo para el fondo de la ventana
+    public Fondo imagen = new Fondo();  
+    
+    /**
+     * Constructor de la clase transaccionIII.
+     * @param cuenta Número de cuenta del usuario origen.
+     * @param tarjeta Número de tarjeta asociada a la cuenta origen.
+     * @param cuenta2 Número de cuenta del destinatario.
+     */
+    public transaccionIII(String cuenta, String tarjeta, String cuenta2) {
+        this.cuenta = cuenta;
+        this.tarjeta = tarjeta;
+        this.cuenta2 = cuenta2;
+        this.setContentPane(imagen);
+        initComponents();
+        setResizable(false);
+              
+        // Configuración de los botones de la ventana
+        saldo7.setIcon(setIcono("/imagenes/otroMonto.png", saldo7));
+        saldo7.setPressedIcon(setIconoPrecionado("/imagenes/otroMonto.png", saldo7, 30, 30));
+        
+        atras.setIcon(setIcono("/imagenes/atras.png", atras));
+        atras.setPressedIcon(setIconoPrecionado("/imagenes/atras.png", atras, 30, 30));
+    }
+    
+    CambiosEnSaldo cambio = new CambiosEnSaldo(); // Instancia para realizar cambios en el saldo
+
+    // Método generado automáticamente que inicializa los componentes de la ventana
+    private void initComponents() {
+        // Inicialización de componentes como etiquetas, botones, etc.
+        // Configuración de eventos para los botones
+    }                         
+    
+    // Evento para el botón de atras
+    private void atrasActionPerformed(java.awt.event.ActionEvent evt) {                                      
+        menu v = new menu(tarjeta, cuenta); // Abre la ventana de menú principal
+        v.setVisible(true);
+        dispose(); // Cierra la ventana actual
+    }                                     
+
+    // Evento para el botón de confirmar transferencia
+    private void saldo7ActionPerformed(java.awt.event.ActionEvent evt) {                                       
+        MontoTransacciones v = new MontoTransacciones(cuenta, tarjeta, cuenta2); // Abre la ventana para ingresar el monto de la transacción
+        v.setVisible(true);
+        dispose(); // Cierra la ventana actual
+    }                                      
+
+    // Eventos para los botones de transferencia con montos predefinidos
+    private void BTONDiezActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        cambio.transferirDinero("C:\\Users\\fband\\Downloads\\cajero (1)\\cajero\\cuentas\\" + cuenta + ".txt",
+            "C:\\Users\\fband\\Downloads\\cajero (1)\\cajeroo\\cuentas\\" + cuenta2 + ".txt", 10.0, cuenta, cuenta2);
+        menu i = new menu(tarjeta, cuenta); // Abre la ventana de menú principal
+        i.setVisible(true);
+        dispose(); // Cierra la ventana actual
+    }                                        
+
+    private void BTNCINCUENTAActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        cambio.transferirDinero("C:\\Users\\fband\\Downloads\\cajero (1)\\cajeroo\\cuentas\\" + cuenta + ".txt",
+            "C:\\Users\\fband\\Downloads\\cajero (1)\\cajeroo\\cuentas\\" + cuenta2 + ".txt", 50.0, cuenta, cuenta2);
+        menu i = new menu(tarjeta, cuenta); // Abre la ventana de menú principal
+        i.setVisible(true);
+        dispose(); // Cierra la ventana actual
+    }                                            
+
+    private void BTNDOSIENTOSActionPerformed(java.awt.event.ActionEvent evt) {                                             
+        cambio.transferirDinero("C:\\Users\\fband\\Downloads\\cajero (1)\\cajeroo\\cuentas\\" + cuenta + ".txt",
+            "C:\\Users\\fband\\Downloads\\cajero (1)\\cajeroo\\cuentas\\" + cuenta2 + ".txt", 200.0, cuenta, cuenta2);
+        menu i = new menu(tarjeta, cuenta); // Abre la ventana de menú principal
+        i.setVisible(true);
+        dispose(); // Cierra la ventana actual
+    }
