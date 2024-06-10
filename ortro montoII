@@ -1,0 +1,147 @@
+package cajero;
+
+import java.awt.Graphics;
+import java.awt.Image;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+
+/**
+ * Esta clase representa la interfaz para ingresar un monto a depositar en una cuenta.
+ * Extiende de javax.swing.JFrame para crear la interfaz gráfica.
+ */
+public class OtroMontoI extends javax.swing.JFrame {
+    static String cuenta;
+    static String tarjeta;
+    public Fondo imagen = new Fondo(); // Panel personalizado para el fondo de la interfaz
+    
+    /**
+     * Constructor de la clase OtroMontoI.
+     * @param cuenta Número de cuenta del usuario.
+     * @param tarjeta Número de tarjeta del usuario.
+     */
+    public OtroMontoI(String cuenta, String tarjeta) {
+        this.cuenta = cuenta;
+        this.tarjeta = tarjeta;
+        this.setContentPane(imagen); // Establece el fondo de la ventana
+        initComponents(); // Inicializa los componentes de la interfaz
+        setResizable(false); // Evita que la ventana sea redimensionable
+        
+        // Configuración del botón de confirmación
+        confirmar.setIcon(setIcono("/imagenes/confirmar.png", confirmar));
+        confirmar.setPressedIcon(setIconoPrecionado("/imagenes/confirmar.png", confirmar, 30, 30));
+    }
+    
+    CambiosEnSaldo cambio = new CambiosEnSaldo(); // Instancia de la clase CambiosEnSaldo para realizar cambios en el saldo
+
+    // Métodos generados automáticamente por el editor de formularios de NetBeans
+    // Se omiten los comentarios generados por el editor
+
+    private void initComponents() {
+        // Código generado automáticamente
+    }
+
+    private void numCuentaActionPerformed(java.awt.event.ActionEvent evt) {
+        // Código generado automáticamente
+    }
+
+    /**
+     * Maneja el evento de confirmación para depositar el monto ingresado en la cuenta.
+     * @param evt Evento de acción.
+     */
+    private void confirmarActionPerformed(java.awt.event.ActionEvent evt) {                                          
+        try {
+            RetiroMonto(); // Llama al método RetiroMonto para depositar el monto ingresado
+        } catch (IOException ex) {
+            Logger.getLogger(OtroMontoI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    /**
+     * Deposita el monto ingresado en la cuenta y actualiza el saldo.
+     * @throws IOException Si ocurre un error de entrada/salida.
+     */
+    public void RetiroMonto() throws IOException {
+        String ingreso = numCuenta.getText(); // Obtiene el monto ingresado en el campo de texto
+        double dinero = Double.parseDouble(ingreso); // Convierte el monto a tipo double
+        
+        // Realiza el depósito del monto en la cuenta
+        cambio.IncrementoSaldo("C:\\Users\\fband\\Downloads\\cajero (1)\\cajero\\cuentas\\" + cuenta + ".txt", dinero);
+        
+        // Muestra un mensaje de éxito
+        JOptionPane.showMessageDialog(null, "ACCION REALIZADA CON EXITO");
+        
+        // Registra la transacción en el historial
+        historial his = new historial(cuenta, "SE DEPOSITO DINERO" + " :" + dinero);
+        his.guardar();
+        
+        // Abre la ventana del menú principal
+        menu i = new menu(tarjeta, cuenta);
+        i.setVisible(true);
+        dispose(); // Cierra la ventana actual
+    }
+
+    /**
+     * Método principal para ejecutar la aplicación.
+     * @param args Argumentos de la línea de comandos.
+     */
+    public static void main(String args[]) {
+        /* Código para configurar el look and feel de la interfaz */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new OtroMontoI(cuenta, tarjeta).setVisible(true);
+            }
+        });
+    }
+
+    /**
+     * Clase interna para el panel personalizado de fondo.
+     */
+    class Fondo extends JPanel {
+
+        private Image imagen;
+
+        @Override
+        public void paint(Graphics g) {
+            imagen = new ImageIcon(getClass().getResource("/imagenes/fondo.png")).getImage();
+            g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
+            setOpaque(false);
+            super.paint(g);
+        }
+    }
+    
+    /**
+     * Método para establecer el icono de un botón.
+     * @param url URL del icono.
+     * @param b Botón al que se le asignará el icono.
+     * @return Icono configurado para el botón.
+     */
+    public Icon setIcono(String url, JButton b) {
+        ImageIcon icon = new ImageIcon(getClass().getResource(url));
+        int ancho = b.getWidth();
+        int alto = b.getHeight();
+        ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(ancho, alto, Image.SCALE_DEFAULT));
+        return icono;
+    }
+    
+    /**
+     * Método para establecer el icono presionado de un botón.
+     * @param url URL del icono.
+     * @param b Botón al que se le asignará el icono presionado.
+     * @param ancho Ancho del botón.
+     * @param alto Alto del botón.
+     * @return Icono presionado configurado para el botón.
+     */
+    public Icon setIconoPrecionado(String url, JButton b, int ancho, int alto) {
+        ImageIcon icon = new ImageIcon(getClass().getResource(url));
+        int width = b.getWidth() - ancho;
+        int height = b.getHeight() - alto;
+        ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
+        return icono;
+    }
+}
