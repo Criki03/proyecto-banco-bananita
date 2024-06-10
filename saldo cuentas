@@ -1,0 +1,177 @@
+package cajero;
+
+import java.awt.Graphics;
+import java.awt.Image;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
+/**
+ * Clase SaldoCuentas que representa la interfaz para mostrar el saldo y el historial de una cuenta.
+ */
+public class SaldoCuentas extends javax.swing.JFrame {
+    public Fondo imagen = new Fondo(); // Panel personalizado para el fondo de la interfaz
+    
+    DefaultTableModel dt = new DefaultTableModel(); // Modelo de tabla para mostrar el historial
+    JComboBox<String> idiomas; // ComboBox para cambiar el idioma
+    
+    static String cuentat; // Número de cuenta
+    static String tarjeta; // Número de tarjeta
+    double dato; // Saldo de la cuenta
+    
+    /**
+     * Constructor de la clase SaldoCuentas.
+     * @param cuentat Número de cuenta del usuario.
+     * @param tarjeta Número de tarjeta del usuario.
+     */
+    public SaldoCuentas(String cuentat, String tarjeta) {   
+        this.cuentat = cuentat;
+        this.tarjeta = tarjeta;
+        
+        // Instancia de funcionalidad para leer el saldo de la cuenta
+        funcionalidad fun = new funcionalidad();
+        
+        // Leer el saldo de la cuenta desde el archivo correspondiente
+        dato = (double) fun.leerSaldo("C:\\Users\\fband\\Downloads\\cajero (1)\\cajero\\cuentas\\" + cuentat + ".txt");
+        
+        // Obtener la moneda de la cuenta
+        String monedaCuenta = processFile("C:\\Users\\fband\\Downloads\\cajero (1)\\cajero\\cuentas\\" + cuentat + ".txt");
+        
+        // Instancia de historial para obtener el historial de transacciones de la cuenta
+        historial his = new historial(cuentat, tarjeta);
+        
+        // Obtener el historial de la cuenta desde el archivo de registros
+        String dattt = his.findMatchingLines("C:\\Users\\fband\\Downloads\\cajero (1)\\cajero\\registro\\registros.txt", cuentat);
+        System.out.println(dattt); // Imprimir el historial en la consola
+        
+        // Configuración de la interfaz gráfica
+        this.setContentPane(imagen);
+        initComponents();
+        transpC(cuentat, dato, dattt, monedaCuenta); // Actualizar la interfaz con los datos obtenidos
+        
+        // Configuración de los nombres de las columnas de la tabla
+        String[] nombres = new String[]{"Fecha", "Hora", "TIpoTransaccion", "Saldo", "Cuenta"};
+        dt.setColumnIdentifiers(nombres);
+   
+        setResizable(false);
+        
+        // Configuración de los botones de la interfaz
+        atras.setIcon(setIcono("/imagenes/atras.png", atras));
+        atras.setPressedIcon(setIconoPrecionado("/imagenes/atras.png", atras, 30, 30));
+        
+        act.setIcon(setIcono("/imagenes/act.png", act));
+        act.setPressedIcon(setIconoPrecionado("/imagenes/act.png", act, 30, 30));
+    }
+    
+    // Métodos generados automáticamente por el editor de formularios de NetBeans
+    // Se omiten los comentarios generados por el editor
+
+    private void initComponents() {
+        // Código generado automáticamente
+    }
+
+    private void atrasActionPerformed(java.awt.event.ActionEvent evt) {                                      
+        // Código generado automáticamente al hacer clic en el botón "atras"
+        menu v = new menu(tarjeta, cuentat);
+        v.setVisible(true);
+        dispose();
+    }                                     
+
+    private void actActionPerformed(java.awt.event.ActionEvent evt) {                                    
+        // Código generado automáticamente al hacer clic en el botón "act"
+    }                                   
+
+    private void saldoActionPerformed(java.awt.event.ActionEvent evt) {                                      
+        // Código generado automáticamente al hacer clic en el botón "saldo"
+    }                                     
+
+    /**
+     * Método para convertir un texto en formato HTML.
+     * @param texto Texto a convertir.
+     * @return Texto en formato HTML.
+     */
+    public String StrToHtml(String texto) {
+        return "<html>" + texto.replace("\n", "<br>") + "</html>";
+    }
+    
+    /**
+     * Actualiza la interfaz con los datos de la cuenta y el historial de transacciones.
+     * @param nom Número de cuenta.
+     * @param dato Saldo de la cuenta.
+     * @param textos Historial de transacciones.
+     * @param datomoneda Moneda de la cuenta.
+     */
+    public void transpC(String nom, double dato, String textos, String datomoneda){
+        String datos = String.valueOf(dato);
+        cuenta.setText(nom);
+        cuenta.setContentAreaFilled(false);
+        cuenta.setBorderPainted(false);
+        saldo.setText(datos);
+        saldo.setContentAreaFilled(false);
+        saldo.setBorderPainted(false);
+        labeltxt.setText(StrToHtml(textos) + "\n");
+        saldo1.setText(datomoneda);
+        saldo1.setContentAreaFilled(false);
+        saldo1.setBorderPainted(false);
+    }
+    
+    /**
+     * Método para procesar un archivo y reconocer la moneda de la cuenta.
+     * @param filePath Ruta del archivo.
+     * @return Mensaje indicando la moneda de la cuenta.
+     */
+    public static String processFile(String filePath) {
+        StringBuilder result = new StringBuilder();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String message = recognizeCurrency(line);
+                if (!message.isEmpty()) {
+                    if (result.length() > 0) {
+                        result.append("\n"); // Añadir un salto de línea entre mensajes
+                    }
+                    result.append(message);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result.toString();
+    }
+
+    /**
+     * Método para reconocer la moneda de la cuenta.
+     * @param line Línea del archivo.
+     * @return Mensaje indicando la moneda de la cuenta.
+     */
+    public static String recognizeCurrency(String line) {
+        if (line.contains("eu:")) {
+            return "SU CUENTA ESTA EN EUROS";
+        } else if (line.contains("dlr:")) {
+            return "SU CUENTA ESTA EN DOLARES";
+        } else if (line.contains("bs:")) {
+            return "SU CUENTA ESTA EN BOLIVIANOS";
+        } else {
+            return "";
+        }
+    }
+
+    /**
+     * Clase interna para el panel personalizado de fondo.
+     */
+    class Fondo extends JPanel {
+
+        private Image imagen;
+
+        @Override
+        public void paint(Graphics g) {
+            imagen = new ImageIcon(getClass().getResource("/imagenes/fondo.png")).getImage();
+            g.drawImage(im
